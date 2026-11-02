@@ -2,7 +2,7 @@
  * @Author: Codex
  * @Date: 2026-10-30 16:29:51
  * @LastEditors: Codex
- * @LastEditTime: 2026-10-30 17:08:54
+ * @LastEditTime: 2026-11-02 13:40:12
  * @Description: 验证多尺寸期权试算、市场策略切换、输入边界与本机草稿
  */
 import { expect, test, type Page } from '@playwright/test'
@@ -45,7 +45,7 @@ test('美股 Put 即时试算、主题与草稿持久化、清空输入', async 
   await expect(page.locator('html')).toHaveClass(/light/)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   await page.screenshot({
-    path: `/private/tmp/option-calculator-${testInfo.project.name}.png`,
+    path: testInfo.outputPath('option-calculator.png'),
     fullPage: true,
     animations: 'disabled',
   })
@@ -153,7 +153,7 @@ test('中文日历支持主题、月份切换、选日、方向键、Escape 和�
     expect(dayBounds!.width).toBeGreaterThanOrEqual(44)
     expect(dayBounds!.height).toBeGreaterThanOrEqual(44)
     await page.screenshot({
-      path: `/private/tmp/option-calculator-calendar-${testInfo.project.name}-${theme === '明亮' ? 'light' : 'dark'}.png`,
+      path: testInfo.outputPath(`calendar-${theme === '明亮' ? 'light' : 'dark'}.png`),
       animations: 'disabled',
     })
     await day.press('Escape')
